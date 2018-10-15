@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "b14491fa-d1e9-45b0-8fa3-4e65c9a011e0",
+		"name": "test_task_controller_addresses",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_addresses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/addresses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses"
+					]
+				},
+				"description": "get addresses"
+			},
+			"response": []
+		},
+		{
+			"name": "Negativ results for get _addresses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15731f55-1490-48d3-9112-42e5de3a28a3",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/addresses/{{id}}?id=+1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "+1"
+						}
+					]
+				},
+				"description": "Negativ results for get _addresses "
+			},
+			"response": []
+		},
+		{
+			"name": "Create_addresses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4dce358c-f74a-4a4c-b4a2-46a9677e61f3",
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"responseJSON = JSON.parse(responseBody);",
+							"}",
+							"catch (e) {}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body has required parameters\", function(){",
+							"    responseJSON.hasOwnProperty(\"id\");",
+							"});",
+							"",
+							"",
+							"if (responseJSON.id) {",
+							"pm.globals.set(\"id\", responseJSON.id);",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"city\":\"Kyiv\",\r\n  \"street\":\"Trostyanetskaya\",\r\n  \"district\":\"Darnitskyi\",\r\n  \"postcode\":\"02099\",\r\n  \"houseNumber\":\"51\",\r\n  \"description\":\"none\",\r\n  \"region\":\"Kyiv\",\r\n  \"apartmentNumber\":\"32\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/addresses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses"
+					]
+				},
+				"description": "Create addresses"
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc367c89-7f87-43c5-aba4-5b0c9dcbe496",
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"responseJSON = JSON.parse(responseBody);",
+							"}",
+							"catch (e) {}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body has required parameters\", function(){",
+							"    responseJSON.hasOwnProperty(\"id\");",
+							"});",
+							"",
+							"",
+							"if (responseJSON.id) {",
+							"pm.globals.set(\"id\", responseJSON.id);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"city\":\"Kyiv\",\r\n  \"street\":\"Trostyanetskaya\",\r\n  \"district\":\"Kharkivska\",\r\n  \"postcode\":\"02099\",\r\n  \"houseNumber\":\"51\",\r\n  \"description\":\"none\",\r\n  \"region\":\"Kyiv\",\r\n  \"apartmentNumber\":\"32\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/addresses/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses",
+						"{{id}}"
+					]
+				},
+				"description": "Update addresses"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91eb6cf2-633f-402d-a5a9-739bcbab3922",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/addresses/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses",
+						"{{id}}"
+					]
+				},
+				"description": "Delete addresses"
+			},
+			"response": []
+		},
+		{
+			"name": "Negativ_delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aea837f9-cd01-47d7-b236-e0c5bc55f121",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/addresses/{{id}}?{{id}}=+1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "{{id}}",
+							"value": "+1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

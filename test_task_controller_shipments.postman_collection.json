@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "32583cb8-dffa-4b2a-b387-c90d4c3770fc",
+		"name": "test_task_controller_shipments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get shipments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0c0f711-c158-4870-9226-d28dc24cb4ee",
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"responseJSON = JSON.parse(responseBody);",
+							"}",
+							"catch (e) {}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body has required parameters\", function(){",
+							"    responseJSON.hasOwnProperty(\"senderId\", \"recipientId\");",
+							"});",
+							"",
+							"pm.globals.set(\"senderId\", responseJSON.senderId);",
+							"pm.globals.set(\"recipientId\", responseJSON.recipientId);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/shipments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments"
+					]
+				},
+				"description": "Get shipments"
+			},
+			"response": []
+		},
+		{
+			"name": "Negativ result for get_shipments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0c0f711-c158-4870-9226-d28dc24cb4ee",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/shipments/{{id}}?id=+1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "+1"
+						}
+					]
+				},
+				"description": "Negativ result for get_shipments"
+			},
+			"response": []
+		},
+		{
+			"name": "Create shipments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9e49ea00-e7af-4bf4-80b8-71d860b25989",
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"responseJSON = JSON.parse(responseBody);",
+							"}",
+							"catch (e) {}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body has required parameters\", function(){",
+							"    responseJSON.hasOwnProperty(\"id\");",
+							"});",
+							"",
+							"",
+							"if (responseJSON.id) {",
+							"pm.globals.set(\"id\", responseJSON.id);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"senderId\": 1,\r\n  \"recipientId\": 2,\r\n  \"deliveryType\": \"D2W\",\r\n  \"weight\": 5,\r\n  \"length\": 4,\r\n  \"width\": 0,\r\n  \"height\": 0,\r\n  \"declaredPrice\": 23.5,\r\n  \"price\": 33,\r\n  \"postPay\": 71,\r\n  \"description\": null\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/shipments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments"
+					]
+				},
+				"description": "Create shipments"
+			},
+			"response": []
+		},
+		{
+			"name": "Update shipments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "55620ba7-d3a1-45fa-86ac-20474ed44cef",
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"responseJSON = JSON.parse(responseBody);",
+							"}",
+							"catch (e) {}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body has required parameters\", function(){",
+							"    responseJSON.hasOwnProperty(\"id\");",
+							"});",
+							"",
+							"if (responseJSON.id) {",
+							"pm.globals.set(\"id\", responseJSON.id);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"senderId\": 1,\r\n  \"recipientId\": 2,\r\n  \"deliveryType\": \"D2W\",\r\n  \"weight\": 5,\r\n  \"length\": 4,\r\n  \"width\": 0,\r\n  \"height\": 0,\r\n  \"declaredPrice\": 23.5,\r\n  \"price\": 150,\r\n  \"postPay\": 71,\r\n  \"description\": null\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/shipments/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments",
+						"{{id}}"
+					]
+				},
+				"description": "Update shipments"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete shipments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3795056e-e65f-4ff8-ad71-dba355bbdef7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/shipments/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments",
+						"{{id}}"
+					]
+				},
+				"description": "Delete shipments"
+			},
+			"response": []
+		},
+		{
+			"name": "Negativ delete shipment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3795056e-e65f-4ff8-ad71-dba355bbdef7",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/shipments/{{id}}?{{id}}=+1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "{{id}}",
+							"value": "+1"
+						}
+					]
+				},
+				"description": "Negativ delete shipment"
+			},
+			"response": []
+		},
+		{
+			"name": "Create shipments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9e49ea00-e7af-4bf4-80b8-71d860b25989",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var deliveredPrice  = pm.response.json(\"price\");",
+							"    pm.expect(153).to.eql(deliveredPrice.price);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"senderId\": 1,\r\n  \"recipientId\": 1,\r\n  \"deliveryType\": \"D2W\",\r\n  \"weight\": 12,\r\n  \"length\": 10,\r\n  \"width\": 0,\r\n  \"height\": 0,\r\n  \"declaredPrice\": 33.5,\r\n  \"price\": 153,\r\n  \"postPay\": 81,\r\n  \"description\": null\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/shipments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shipments"
+					]
+				},
+				"description": "Create shipments with expected price, but creation passes with wrong price"
+			},
+			"response": []
+		}
+	]
+}
